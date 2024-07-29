@@ -89,7 +89,7 @@ class CarState(CarStateBase):
 
     ret.vEgoCluster = self.cluster_speed * speed_conv
 
-    ret.steeringAngleDeg = cp.vl["SAS11"]["SAS_Angle"]
+    ret.steeringAngleDeg = cp.vl["SAS11"]["SAS_Angle"] - 27.0 # kona ev steering offset
     ret.steeringRateDeg = cp.vl["SAS11"]["SAS_Speed"]
     ret.yawRate = cp.vl["ESP12"]["YAW_RATE"]
     ret.leftBlinker, ret.rightBlinker = self.update_blinker_from_lamp(
@@ -159,7 +159,7 @@ class CarState(CarStateBase):
       ret.rightBlindspot = cp.vl["LCA11"]["CF_Lca_IndRight"] != 0
 
     # save the entire LKAS11 and CLU11
-    self.lkas11 = copy.copy(cp_cam.vl["LKAS11"])
+    # self.lkas11 = copy.copy(cp_cam.vl["LKAS11"])
     self.clu11 = copy.copy(cp.vl["CLU11"])
     self.steer_state = cp.vl["MDPS12"]["CF_Mdps_ToiActive"]  # 0 NOT ACTIVE, 1 ACTIVE
     self.prev_cruise_buttons = self.cruise_buttons[-1]

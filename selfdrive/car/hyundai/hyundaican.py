@@ -7,31 +7,16 @@ def create_lkas11(packer, frame, CP, apply_steer, steer_req,
                   torque_fault, lkas11, sys_warning, sys_state, enabled,
                   left_lane, right_lane,
                   left_lane_depart, right_lane_depart):
-  values = {s: lkas11[s] for s in [
-    "CF_Lkas_LdwsActivemode",
-    "CF_Lkas_LdwsSysState",
-    "CF_Lkas_SysWarning",
-    "CF_Lkas_LdwsLHWarning",
-    "CF_Lkas_LdwsRHWarning",
-    "CF_Lkas_HbaLamp",
-    "CF_Lkas_FcwBasReq",
-    "CF_Lkas_HbaSysState",
-    "CF_Lkas_FcwOpt",
-    "CF_Lkas_HbaOpt",
-    "CF_Lkas_FcwSysState",
-    "CF_Lkas_FcwCollisionWarning",
-    "CF_Lkas_FusionState",
-    "CF_Lkas_FcwOpt_USM",
-    "CF_Lkas_LdwsOpt_USM",
-  ]}
-  values["CF_Lkas_LdwsSysState"] = sys_state
-  values["CF_Lkas_SysWarning"] = 3 if sys_warning else 0
-  values["CF_Lkas_LdwsLHWarning"] = left_lane_depart
-  values["CF_Lkas_LdwsRHWarning"] = right_lane_depart
-  values["CR_Lkas_StrToqReq"] = apply_steer
-  values["CF_Lkas_ActToi"] = steer_req
-  values["CF_Lkas_ToiFlt"] = torque_fault  # seems to allow actuation on CR_Lkas_StrToqReq
-  values["CF_Lkas_MsgCount"] = frame % 0x10
+  values = {
+    "CF_Lkas_LdwsSysState": sys_state,
+    "CF_Lkas_SysWarning": 3 if sys_warning else 0,
+    "CF_Lkas_LdwsLHWarning": left_lane_depart,
+    "CF_Lkas_LdwsRHWarning": right_lane_depart,
+    "CR_Lkas_StrToqReq": apply_steer,
+    "CF_Lkas_ActToi": steer_req,
+    "CF_Lkas_ToiFlt": torque_fault,  # seems to allow actuation on CR_Lkas_StrToqReq
+    "CF_Lkas_MsgCount": frame % 0x10,
+  }
 
   if CP.carFingerprint in (CAR.HYUNDAI_SONATA, CAR.HYUNDAI_PALISADE, CAR.KIA_NIRO_EV, CAR.KIA_NIRO_HEV_2021, CAR.HYUNDAI_SANTA_FE,
                            CAR.HYUNDAI_IONIQ_EV_2020, CAR.HYUNDAI_IONIQ_PHEV, CAR.KIA_SELTOS, CAR.HYUNDAI_ELANTRA_2021, CAR.GENESIS_G70_2020,
